@@ -33,5 +33,5 @@ def load_json(file_path):
     latest_time, latest_file = max(previous_files, key=lambda item: item[0])
 
     with open(latest_file, "r") as f:
-        print("completed")
+        print("completed: " + str(latest_file))
         return json.load(f)
