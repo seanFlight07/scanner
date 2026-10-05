@@ -16,11 +16,6 @@ def check_ports(host, previous_scan, current_scan):
     removed_ports = previous_ports - current_ports
     existing_ports = previous_ports & current_ports
     
-    print(
-        f"Added Ports: {added_ports} \n"
-        f"Removed Ports: {removed_ports} \n"
-        f"Existing Ports: {existing_ports}"
-        )
     return added_ports, removed_ports, existing_ports
 
 def check_hosts(previous_scan, current_scan):
@@ -31,11 +26,6 @@ def check_hosts(previous_scan, current_scan):
     removed_hosts = previous_hosts - current_hosts
     existing_hosts = previous_hosts & current_hosts
 
-    print(
-        f"Added Hosts: {added_hosts} \n"
-        f"Removed Hosts: {removed_hosts} \n"
-        f"Existing Hosts: {existing_hosts}"
-        )
     return added_hosts, removed_hosts, existing_hosts
 
 
