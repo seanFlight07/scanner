@@ -1,0 +1,22 @@
+HOST CHANGES
+----------------------------------------
+[-] 192.168.1.145
+[-] 192.168.1.162
+
+PORT CHANGES
+----------------------------------------
+No port changes detected.
+
+STATE CHANGES
+----------------------------------------
+192.168.1.153
+    21/tcp: closed -> filtered
+    22/tcp: closed -> filtered
+    23/tcp: closed -> filtered
+    25/tcp: closed -> filtered
+    80/tcp: closed -> filtered
+    110/tcp: closed -> filtered
+    139/tcp: closed -> filtered
+    443/tcp: closed -> filtered
+    445/tcp: closed -> filtered
+    3389/tcp: closed -> filtered
