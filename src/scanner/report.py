@@ -1,57 +1,90 @@
-def print_hosts(added_hosts, removed_hosts):
-    print("HOST CHANGES")
-    print("-" * 40)
+from pathlib import Path
+from datetime import datetime
+
+def hosts_report(added_hosts, removed_hosts):
+    lines = [
+        "HOST CHANGES",
+        "-" * 40
+    ]
 
     if added_hosts:
         for host in sorted(added_hosts):
-            print(f"[+] {host}")
+            lines.append(f"[+] {host}")
 
     if removed_hosts:
         for host in sorted(removed_hosts):
-            print(f"[-] {host}")
+            lines.append(f"[-] {host}")
 
     if not added_hosts and not removed_hosts:
-        print("No host changes detected.")
+        lines.append("No host changes detected.")
 
-    print()
+    return "\n".join(lines)
 
 
-def print_ports(port_changes):
-    print("PORT CHANGES")
-    print("-" * 40)
+def ports_report(port_changes):
+    lines = [
+        "PORT CHANGES",
+        "-" * 40
+    ]
 
     if not port_changes:
-        print("No port changes detected.")
-        print()
-        return
+        lines.append("No port changes detected.")
+        return "\n".join(lines)
 
     for host, changes in port_changes.items():
-        print(host)
+        lines.append(host)
 
         for port in sorted(changes["added"]):
-            print(f"    [+] {port}/tcp")
+            lines.append(f"    [+] {port}/tcp")
 
         for port in sorted(changes["removed"]):
-            print(f"    [-] {port}/tcp")
+            lines.append(f"    [-] {port}/tcp")
 
-        print()
+    return "\n".join(lines)
 
-def print_states(state_changes):
-    print("STATE CHANGES")
-    print("-" * 40)
+def states_report(state_changes):
+    lines = [
+        "STATE CHANGES",
+        "-" * 40
+    ]
 
     if not state_changes:
-        print("No state changes detected.")
-        print()
-        return
+        lines.append("No state changes detected.")
+        return "\n".join(lines)
 
     for host, ports in state_changes.items():
-        print(host)
+        lines.append(host)
 
         for port, states in sorted(ports.items()):
-            print(
+            lines.append(
                 f"    {port}/tcp: "
                 f"{states['previous']} -> {states['current']}"
             )
 
-        print()
+    return "\n".join(lines)
+
+def generate_report(
+    added_hosts,
+    removed_hosts,
+    port_changes,
+    state_changes
+):
+    sections = [
+        hosts_report(added_hosts, removed_hosts),
+        ports_report(port_changes),
+        states_report(state_changes)
+    ]
+
+    return "\n\n".join(sections)
+
+def save_report(scan_report):
+    report_path = Path(__file__).resolve().parents[2] / "reports"
+    report_path.mkdir(parents=True, exist_ok=True)
+
+    file_name = datetime.now().strftime("%Y-%m-%d_%H-%M-%S.txt")
+    file_path = report_path / file_name
+
+    with open(file_path, "w") as file:
+        file.write(scan_report)
+
+    return file_path
