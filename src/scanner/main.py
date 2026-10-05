@@ -64,6 +64,10 @@ def main():
     report_file = report.save_report(scan_report)
     print(f"\nReport saved: {report_file}")
 
-    
+    storage.to_json(
+        current_scan,
+        file_name,
+        file_path
+    )
 if __name__ == "__main__":
     main()
