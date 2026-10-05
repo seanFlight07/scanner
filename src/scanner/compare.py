@@ -19,7 +19,7 @@ def check_ports(host, previous_scan, current_scan):
     print(
         f"Added Ports: {added_ports} \n"
         f"Removed Ports: {removed_ports} \n"
-        f"Existing Portss: {existing_ports}"
+        f"Existing Ports: {existing_ports}"
         )
     return added_ports, removed_ports, existing_ports
 
@@ -37,3 +37,16 @@ def check_hosts(previous_scan, current_scan):
         f"Existing Hosts: {existing_hosts}"
         )
     return added_hosts, removed_hosts, existing_hosts
+
+
+def check_state(host, port, previous_scan, current_scan):
+    previous_ports = get_ports(host, previous_scan)
+    current_ports = get_ports(host, current_scan)
+
+    previous_state = previous_ports[str(port)]["state"]
+    current_state = current_ports[port]["state"]
+
+    if previous_state != current_state:
+        return previous_state, current_state
+
+    return None
